@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useShoppingCardStore } from "./Components/useShoppingCard";
+import useGetListItemsByEndPoint from "./Hooks/useGetListItemsByEndPoint";
+import styled from "styled-components";
+import ShoppingCart from "./Components/Cart";
+import Products from "./Components/Products";
+
+const ShoppingPage = styled.section`
+  text-align: center;
+  position: relative;
+`;
 
 function App() {
+  const { state } = useGetListItemsByEndPoint("products", "items");
+  const { cartItems, setDeleteItem, setEmptyCart, increaseCartQuantity, decreaseCartQuantity } = useShoppingCardStore();
+
+  const returnAmount = (id) => {
+    const itemAmount = cartItems.find((ci) => ci.id === id)?.amount;
+    return itemAmount;
+  };
+
+  console.log(cartItems);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ShoppingPage>
+      <h1>Shopping med Zustand</h1>
+      <Products />
+      {cartItems ? <ShoppingCart /> : null}
+    </ShoppingPage>
   );
 }
 
