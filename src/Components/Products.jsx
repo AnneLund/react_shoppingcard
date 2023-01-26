@@ -36,7 +36,7 @@ const Products = () => {
             <p>{item.title}</p>
             <span>
               <button onClick={() => increaseCartQuantity(item.id, item.price, 1, item.title)}>Tilføj</button>
-              <span>Antal: {returnAmount(item.id)}</span>
+              {returnAmount(item.id) > null ? <span>Antal: {returnAmount(item.id)}</span> : null}
             </span>
           </li>
         </>
